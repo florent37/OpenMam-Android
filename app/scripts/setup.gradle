@@ -1,0 +1,7 @@
+android.applicationVariants.all { variant ->
+    resValue "color", "mam_colorPrimary", project.mam_appColor
+    resValue "color", "mam_colorPrimaryDark", project.mam_appColor
+    resValue "color", "appColor", project.mam_appColor
+    resValue "string", "mam_appName", project.mam_appName
+    buildConfigField "String", "MAM_SERVER_URL", "\""+project.mam_server+"\""
+}
