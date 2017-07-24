@@ -9,6 +9,7 @@ import dagger.Component;
 import florent37.github.com.mam.ui.apps.AppsActivity;
 import florent37.github.com.mam.MainApplication;
 import florent37.github.com.mam.ui.apps.AppsListFragment;
+import florent37.github.com.mam.ui.identification.IdentificationFragment;
 import florent37.github.com.mam.ui.versions.VersionsListFragment;
 
 /**
@@ -28,4 +29,6 @@ public abstract class AppComponent {
     public abstract void inject(AppsListFragment appsListFragment);
 
     public abstract void inject(VersionsListFragment versionsListFragment);
+
+    public abstract void inject(IdentificationFragment identificationFragment);
 }

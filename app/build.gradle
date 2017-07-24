@@ -52,8 +52,10 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:' + project.supportLibVersion
     compile 'android.arch.lifecycle:extensions:' + project.archLifecycleVersion;
     annotationProcessor "android.arch.lifecycle:compiler:" + project.archLifecycleVersion;
+
     compile 'com.github.florent37:rxcomponent-lifecycle:1.0.1@aar'
     compile 'com.github.florent37:rxbus:1.0.0'
+
     compile 'com.wada811:android-material-design-colors:3.0.0'
 
     compile 'com.github.florent37:diagonallayout:1.0.6'
@@ -63,6 +65,7 @@ dependencies {
 
     compile 'io.reactivex.rxjava2:rxjava:2.0.9'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
 
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'

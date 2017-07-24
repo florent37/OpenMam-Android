@@ -22,10 +22,10 @@ public class MainBus extends RxBus {
                 .throttleWithTimeout(1, TimeUnit.SECONDS);
     }
 
-    class DisplayAppEvent {
+    private class DisplayAppEvent {
         public String name;
 
-        public DisplayAppEvent(String name) {
+        private DisplayAppEvent(String name) {
             this.name = name;
         }
     }

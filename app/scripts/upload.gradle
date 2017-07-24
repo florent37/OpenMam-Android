@@ -8,18 +8,16 @@ android.applicationVariants.all { variant ->
 
             def serverUrl = project.mam_server
 
-            def uri = "$serverUrl/api.php?method=upload"
-            uri = uri + '&package=' + applicationId
-            uri = uri + '&name=' + project.mam_appName
-            uri = uri + '&apkName=' + apkFile.name
-            uri = uri + '&code=' + android.defaultConfig.versionCode
-            uri = uri + '&version=' + android.defaultConfig.versionName
-            uri = uri + '&platform=' + "android"
+            def uri = serverUrl + "apps/upload"
 
             def url = new URL(uri)
-            def http = url.openConnection()
+            URLConnection http = url.openConnection()
 
             println uri
+
+            http.setRequestProperty("apk-name", "$project.mam_appName")
+            http.setRequestProperty("apk-code", "$android.defaultConfig.versionCode")
+            http.setRequestProperty("apk-version", "$android.defaultConfig.versionName")
 
             http.setDoOutput(true)
             http.setRequestMethod('POST')
@@ -31,8 +29,8 @@ android.applicationVariants.all { variant ->
             try {
                 byte[] buf = new byte[1024];
                 int len;
-                while((len=input.read(buf))>0){
-                    out.write(buf,0,len);
+                while ((len = input.read(buf)) > 0) {
+                    out.write(buf, 0, len);
                 }
                 out.close();
                 input.close();

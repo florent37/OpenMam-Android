@@ -1,13 +1,19 @@
 package florent37.github.com.mam.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by florentchampigny on 18/06/2017.
  */
 
 public class AppVersion {
+    @SerializedName("upload_date")
     private String date;
+    @SerializedName("version_name")
     private String version;
+    @SerializedName("code")
     private String code;
+    @SerializedName("path")
     private String url;
     private String comment;
 

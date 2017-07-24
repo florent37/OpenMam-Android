@@ -15,12 +15,9 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven {
-            url "https://maven.google.com"
-        }
-        maven {
-            url  "http://dl.bintray.com/florent37/maven"
-        }
+        maven { url "https://maven.google.com" }
+        maven { url  "http://dl.bintray.com/florent37/maven" }
+        maven { url "https://jitpack.io" }
         maven { url 'http://github.com/wada811/Android-Material-Design-Colors/raw/master/repository/' }
     }
 }

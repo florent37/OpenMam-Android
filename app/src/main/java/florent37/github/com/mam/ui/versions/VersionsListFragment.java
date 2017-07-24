@@ -1,5 +1,8 @@
 package florent37.github.com.mam.ui.versions;
 
+import android.Manifest;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -12,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -20,13 +25,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import florent37.github.com.mam.R;
 import florent37.github.com.mam.common.BaseFragment;
+import florent37.github.com.mam.common.RxDownloader;
 import florent37.github.com.mam.dagger.AppComponent;
 import florent37.github.com.mam.model.App;
 import florent37.github.com.mam.model.AppVersion;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class VersionsListFragment extends BaseFragment implements VersionsPresenter.View {
 
     static final String APPLICATION = "APPLICATION";
+
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
@@ -91,7 +101,7 @@ public class VersionsListFragment extends BaseFragment implements VersionsPresen
                 super.onScrolled(recyclerView, dx, dy);
                 this.y -= dy;
 
-                header.setTranslationY(y/2f);
+                header.setTranslationY(y / 2f);
             }
         });
     }
@@ -104,5 +114,25 @@ public class VersionsListFragment extends BaseFragment implements VersionsPresen
     @Override
     public void displayAppName(String name) {
         appName.setText(name);
+    }
+
+    @Override
+    public void startDownload(String name, String url) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        /*
+        Observable.just("download")
+                .flatMap($ -> new RxPermissions(getActivity()).request(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                .flatMap($ -> RxDownloader.getInstance(getActivity()).download(url, name))
+                .observeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(this::call)
+                .subscribe(path -> {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(path)));
+                    // Do what you want with downloaded path
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    // Handle download faile here
+                });
+                */
     }
 }

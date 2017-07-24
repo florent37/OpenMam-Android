@@ -35,13 +35,15 @@ public class VersionsPresenter extends AbstractPresenter<VersionsPresenter.View>
     }
 
     public void onVersionClicked(AppVersion appVersion) {
-
+        getView().startDownload(app.getName(), appVersion.getUrl());
     }
 
     public interface View extends AbstractPresenter.View {
         void displayAppVersions(List<AppVersion> versions);
 
         void displayAppName(String name);
+
+        void startDownload(String name, String url);
     }
 
 }

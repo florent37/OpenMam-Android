@@ -1,5 +1,5 @@
 ext{
     mam_appName="App_Market"
     mam_appColor="#4caf50"
-    mam_server= "http://192.168.11.177"
+    mam_server= "http://the-twenty-five.herokuapp.com/"
 }

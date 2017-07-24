@@ -1,5 +1,7 @@
 package florent37.github.com.mam.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -8,11 +10,15 @@ import java.io.Serializable;
 
 public class App implements Serializable {
 
+    @SerializedName("name")
     private String name;
+    @SerializedName("last_version")
     private String lastVersion;
     private String image;
+    @SerializedName("last_uploaded_date")
     private String dateLastUpdate;
     private String packageName;
+    @SerializedName("last_code")
     private String lastCode;
 
     public App() {

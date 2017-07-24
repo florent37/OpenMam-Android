@@ -3,7 +3,9 @@ package florent37.github.com.mam.api;
 import florent37.github.com.mam.model.AppResponse;
 import florent37.github.com.mam.model.AppsResponse;
 import io.reactivex.Single;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -12,10 +14,10 @@ import retrofit2.http.Query;
 
 public interface MamAPI {
 
-    @GET("api.php?method=apps&platform=android")
+    @GET("apps/")
     Single<AppsResponse> apps();
 
-    @GET("api.php?method=app&platform=android")
-    Single<AppResponse> app(@Query("name") String name);
+    @GET("apps/{apkName}")
+    Single<AppResponse> app(@Path("apkName") String name);
 
 }
