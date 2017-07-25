@@ -11,6 +11,8 @@ import dagger.Provides;
 import florent37.github.com.mam.BuildConfig;
 import florent37.github.com.mam.api.MamAPI;
 import florent37.github.com.mam.bus.MainBus;
+import florent37.github.com.mam.common.DownloadManager;
+import florent37.github.com.mam.common.InstallManager;
 import florent37.github.com.mam.repository.AppRepository;
 import mam.repository.AppRepositoryImpl;
 import okhttp3.OkHttpClient;
@@ -36,6 +38,18 @@ public class AppModule {
     @Singleton
     public AppRepository provideAppsRepository(MamAPI mamAPI) {
         return new AppRepositoryImpl(mamAPI);
+    }
+
+    @Provides
+    @Singleton
+    public InstallManager provideInstallManager() {
+        return new InstallManager(application);
+    }
+
+    @Provides
+    @Singleton
+    public DownloadManager provideDownloadManager() {
+        return new DownloadManager(application);
     }
 
     @Provides

@@ -1,15 +1,16 @@
 package florent37.github.com.mam.ui.versions;
 
 import android.Manifest;
-import android.content.Intent;
-import android.net.Uri;
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,15 +24,13 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import florent37.github.com.mam.R;
 import florent37.github.com.mam.common.BaseFragment;
-import florent37.github.com.mam.common.RxDownloader;
 import florent37.github.com.mam.dagger.AppComponent;
 import florent37.github.com.mam.model.App;
 import florent37.github.com.mam.model.AppVersion;
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class VersionsListFragment extends BaseFragment implements VersionsPresenter.View {
 
@@ -46,6 +45,18 @@ public class VersionsListFragment extends BaseFragment implements VersionsPresen
     @BindView(R.id.appName)
     TextView appName;
 
+    @BindView(R.id.appVersion)
+    TextView appVersion;
+
+    @BindView(R.id.appCode)
+    TextView appCode;
+
+    @BindView(R.id.appLayout)
+    View appLayout;
+
+    @BindView(R.id.appIcon)
+    TextView appIcon;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -58,6 +69,11 @@ public class VersionsListFragment extends BaseFragment implements VersionsPresen
         VersionsListFragment fragment = new VersionsListFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    private static float dpToPx(Context context, int dp) {
+        Resources r = context.getResources();
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
     }
 
     @Override
@@ -88,9 +104,25 @@ public class VersionsListFragment extends BaseFragment implements VersionsPresen
         supportActionBar.setDisplayShowTitleEnabled(false);
 
         recyclerView.setAdapter(new VersionsAdapter().onClick(presenter::onVersionClicked));
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        final int totalSpan = 3;
+        final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), totalSpan);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                switch (position) {
+                    case 0:
+                    case 1:
+                        return totalSpan;
+                }
+                return 1;
+            }
+        });
+        recyclerView.setLayoutManager(layoutManager);
 
         presenter.start();
+
+        final float statusBar = dpToPx(getContext(), 28);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -101,7 +133,19 @@ public class VersionsListFragment extends BaseFragment implements VersionsPresen
                 super.onScrolled(recyclerView, dx, dy);
                 this.y -= dy;
 
-                header.setTranslationY(y / 2f);
+                if (appLayout.getTop() + y >= statusBar) {
+                    header.setTranslationY(y);
+
+                    if (appLayout.getTop() != 0) {
+                        float translation = -1 * dpToPx(getContext(), 27) * y / appLayout.getTop();
+                        appVersion.setTranslationY(translation);
+                        appCode.setTranslationY(translation);
+                        appIcon.setTranslationY(translation);
+                        appName.setTranslationY(translation);
+                    }
+                } else {
+                    header.setTranslationY(-appLayout.getTop() + statusBar);
+                }
             }
         });
     }
@@ -112,27 +156,22 @@ public class VersionsListFragment extends BaseFragment implements VersionsPresen
     }
 
     @Override
-    public void displayAppName(String name) {
+    public void displayApp(String name, String code, String version) {
         appName.setText(name);
+        appVersion.setText("Version " + version);
+        appCode.setText("(" + code + ")");
+        appIcon.setText(String.valueOf(name.charAt(0)));
+    }
+
+    @OnClick(R.id.install)
+    public void onInstallClicked(){
+        presenter.onAppDownloadClicked();
     }
 
     @Override
-    public void startDownload(String name, String url) {
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-        /*
-        Observable.just("download")
-                .flatMap($ -> new RxPermissions(getActivity()).request(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-                .flatMap($ -> RxDownloader.getInstance(getActivity()).download(url, name))
-                .observeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(this::call)
-                .subscribe(path -> {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(path)));
-                    // Do what you want with downloaded path
-                }, throwable -> {
-                    throwable.printStackTrace();
-                    // Handle download faile here
-                });
-                */
+    public Observable<Boolean> requestPermissionWriteExternalStorage() {
+        return new RxPermissions(getActivity())
+                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
+
 }

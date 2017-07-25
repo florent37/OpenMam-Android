@@ -11,7 +11,7 @@ import florent37.github.com.mam.model.AppVersion;
 
 public class VersionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final int HEADER_SIZE = 1;
+    private final int HEADER_SIZE = 2;
 
     private final int TYPE_HEADER = 1;
     private final int TYPE_CELL_FIRST = 2;
@@ -24,7 +24,7 @@ public class VersionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType){
             case TYPE_CELL_FIRST:
-                return VersionsViewHolder.buildFirst(parent, clickListenerWrapper);
+                return AppViewHolder.build(parent, clickListenerWrapper);
             case TYPE_CELL:
                 return VersionsViewHolder.build(parent, clickListenerWrapper);
             case TYPE_HEADER:
@@ -35,7 +35,7 @@ public class VersionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        if(position < HEADER_SIZE){
+        if(position == 0){
             return TYPE_HEADER;
         } else if(position == 1){
             return TYPE_CELL_FIRST;
@@ -45,7 +45,7 @@ public class VersionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(position >= HEADER_SIZE) {
+        if(getItemViewType(position) == TYPE_CELL) {
             if (holder instanceof VersionsViewHolder) {
                 ((VersionsViewHolder) holder).bind(getItem(position));
             }

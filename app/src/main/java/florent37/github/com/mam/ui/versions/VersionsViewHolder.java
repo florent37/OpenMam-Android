@@ -32,10 +32,6 @@ public class VersionsViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.code)
     TextView code;
 
-    @BindView(R.id.logo)
-    @Nullable
-    ImageView logo;
-
     private AppVersion appVersion;
     private ClickListenerWrapper<VersionsAdapter.ClickListener> clickListenerWrapper;
 
@@ -46,11 +42,7 @@ public class VersionsViewHolder extends RecyclerView.ViewHolder {
     }
 
     public static RecyclerView.ViewHolder build(ViewGroup parent, ClickListenerWrapper<VersionsAdapter.ClickListener> clickListenerClickListenerWrapper) {
-        return new VersionsViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.appversion_cell, parent, false), clickListenerClickListenerWrapper);
-    }
-
-    public static RecyclerView.ViewHolder buildFirst(ViewGroup parent, ClickListenerWrapper<VersionsAdapter.ClickListener> clickListenerClickListenerWrapper) {
-        return new VersionsViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.appversion_first_cell, parent, false), clickListenerClickListenerWrapper);
+        return new VersionsViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.appversion_cell_square, parent, false), clickListenerClickListenerWrapper);
     }
 
     @OnClick(R.id.download)

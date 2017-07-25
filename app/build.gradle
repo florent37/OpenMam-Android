@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply from: "../configuration.gradle"
 apply from: "scripts/setup.gradle"
 apply from: "scripts/upload.gradle"
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
@@ -12,7 +13,6 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        jackOptions.enabled = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
