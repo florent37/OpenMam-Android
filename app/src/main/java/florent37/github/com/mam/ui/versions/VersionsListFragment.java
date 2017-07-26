@@ -176,6 +176,11 @@ public class VersionsListFragment extends BaseFragment implements VersionsPresen
     }
 
     @Override
+    public void displayApp(AppVersion appVersion){
+        ((VersionsAdapter) recyclerView.getAdapter()).setHeaderObject(appVersion);
+    }
+
+    @Override
     public void displayApp(String name, String code, String version) {
         appName.setText(name);
         appVersion.setText("Version " + version);

@@ -14,10 +14,10 @@ import retrofit2.http.Query;
 
 public interface MamAPI {
 
-    @GET("apps/")
+    @GET("api/")
     Single<AppsResponse> apps();
 
-    @GET("apps/{apkName}")
+    @GET("api/{apkName}")
     Single<AppResponse> app(@Path("apkName") String name);
 
 }

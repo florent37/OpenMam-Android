@@ -8,7 +8,7 @@ android.applicationVariants.all { variant ->
 
             def serverUrl = project.mam_server
 
-            def uri = serverUrl + "apps/upload"
+            def uri = serverUrl + "api/upload"
 
             def url = new URL(uri)
             URLConnection http = url.openConnection()
@@ -18,6 +18,7 @@ android.applicationVariants.all { variant ->
             http.setRequestProperty("apk-name", "$project.mam_appName")
             http.setRequestProperty("apk-code", "$android.defaultConfig.versionCode")
             http.setRequestProperty("apk-version", "$android.defaultConfig.versionName")
+            http.setRequestProperty("apk-comment", "$project.mam_comment")
 
             http.setDoOutput(true)
             http.setRequestMethod('POST')

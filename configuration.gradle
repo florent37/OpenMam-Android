@@ -1,5 +1,6 @@
 ext{
-    mam_appName="App_Market"
+    mam_appName="App Market"
     mam_appColor="#4caf50"
     mam_server= "http://the-twenty-five.herokuapp.com/"
+    mam_comment="Just uploaded App Market 1.0.1"
 }

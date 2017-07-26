@@ -27,7 +27,7 @@ public class AppViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.date)
     TextView date;
 
-    private App app;
+    private AppVersion appVersion;
     private ClickListenerWrapper<VersionsAdapter.ClickListener> clickListenerWrapper;
 
     public AppViewHolder(View itemView, ClickListenerWrapper<VersionsAdapter.ClickListener> clickListenerWrapper) {
@@ -40,11 +40,10 @@ public class AppViewHolder extends RecyclerView.ViewHolder {
         return new AppViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.appversion_first_cell, parent, false), clickListenerClickListenerWrapper);
     }
 
-    public void bind(final App app) {
-        this.app = app;
+    public void bind(final AppVersion appVersion) {
+        this.appVersion = appVersion;
 
-       // this.date.setText(appVersion.getDate());
-       // this.code.setText(String.format("(%s)", appVersion.getCode()));
-       // this.version.setText(appVersion.getVersion());
+        this.comment.setText(appVersion.getComment());
+        this.date.setText(appVersion.getDate());
     }
 }

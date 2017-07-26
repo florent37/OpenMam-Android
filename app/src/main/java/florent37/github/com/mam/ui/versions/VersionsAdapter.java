@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import florent37.github.com.mam.common.ClickListenerWrapper;
+import florent37.github.com.mam.model.App;
 import florent37.github.com.mam.model.AppVersion;
 
 public class VersionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -16,28 +17,25 @@ public class VersionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private final int TYPE_CELL_FIRST = 2;
     private final int TYPE_CELL = 3;
 
-    private List<AppVersion> appList = new ArrayList<>();
+    private Object headerObject;
+    private List<Object> list = new ArrayList<>();
+
     private ClickListenerWrapper<ClickListener> clickListenerWrapper = new ClickListenerWrapper<>();
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        switch (viewType){
+        switch (viewType) {
             case TYPE_CELL_FIRST:
                 return AppViewHolder.build(parent, clickListenerWrapper);
             case TYPE_CELL:
                 return VersionsViewHolder.build(parent, clickListenerWrapper);
-            //case TYPE_HEADER:
-            //    return VersionsHeaderViewHolder.build(parent, clickListenerWrapper);
         }
         return null;
     }
 
     @Override
     public int getItemViewType(int position) {
-        //if(position == 0){
-        //    return TYPE_HEADER;
-        //} else
-        if(position == 0){
+        if (position == 0) {
             return TYPE_CELL_FIRST;
         }
         return TYPE_CELL;
@@ -45,30 +43,44 @@ public class VersionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(getItemViewType(position) == TYPE_CELL) {
-            if (holder instanceof VersionsViewHolder) {
-                ((VersionsViewHolder) holder).bind(getItem(position));
-            }
+        switch (getItemViewType(position)) {
+            case TYPE_CELL:
+                if (holder instanceof VersionsViewHolder) {
+                    ((VersionsViewHolder) holder).bind(getItem(position));
+                }
+                break;
+            case TYPE_CELL_FIRST:
+                if (holder instanceof AppViewHolder) {
+                    ((AppViewHolder) holder).bind((AppVersion) headerObject);
+                }
+                break;
         }
     }
 
-    public VersionsAdapter onClick(ClickListener clickListener){
+    public VersionsAdapter onClick(ClickListener clickListener) {
         this.clickListenerWrapper.setListener(clickListener);
         return this;
     }
 
-    private AppVersion getItem(int position) {
-        return appList.get(position - HEADER_SIZE);
+    private <T> T getItem(int position) {
+        final int headerSize = headerObject != null ? 1 : 0;
+        return (T) list.get(position - headerSize);
     }
 
     @Override
     public int getItemCount() {
-        return appList.size() + HEADER_SIZE;
+        final int headerSize = headerObject != null ? 1 : 0;
+        return list.size() + headerSize;
     }
 
-    public void setItems(List<AppVersion> items) {
-        this.appList.clear();
-        this.appList.addAll(items);
+    public void setHeaderObject(Object item) {
+        headerObject = item;
+        notifyDataSetChanged();
+    }
+
+    public void setItems(List items) {
+        this.list.clear();
+        this.list.addAll(items);
         notifyDataSetChanged();
     }
 
