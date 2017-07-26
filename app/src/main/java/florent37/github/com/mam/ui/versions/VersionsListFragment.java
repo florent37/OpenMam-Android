@@ -14,6 +14,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -27,6 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import florent37.github.com.mam.R;
 import florent37.github.com.mam.common.BaseFragment;
+import florent37.github.com.mam.common.HeaderDecorator;
 import florent37.github.com.mam.dagger.AppComponent;
 import florent37.github.com.mam.model.App;
 import florent37.github.com.mam.model.AppVersion;
@@ -95,16 +97,16 @@ public class VersionsListFragment extends BaseFragment implements VersionsPresen
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        AppCompatActivity appCompatActivity = ((AppCompatActivity) getActivity());
-        appCompatActivity.setSupportActionBar(toolbar);
-
-        final ActionBar supportActionBar = appCompatActivity.getSupportActionBar();
-        supportActionBar.setDisplayHomeAsUpEnabled(true);
-        supportActionBar.setHomeButtonEnabled(true);
-        supportActionBar.setDisplayShowTitleEnabled(false);
+        setupActionbar();
 
         recyclerView.setAdapter(new VersionsAdapter().onClick(presenter::onVersionClicked));
 
+        setupRecyclerView();
+
+        presenter.start();
+    }
+
+    private void setupRecyclerView() {
         final int totalSpan = 3;
         final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), totalSpan);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -112,7 +114,6 @@ public class VersionsListFragment extends BaseFragment implements VersionsPresen
             public int getSpanSize(int position) {
                 switch (position) {
                     case 0:
-                    case 1:
                         return totalSpan;
                 }
                 return 1;
@@ -120,7 +121,14 @@ public class VersionsListFragment extends BaseFragment implements VersionsPresen
         });
         recyclerView.setLayoutManager(layoutManager);
 
-        presenter.start();
+        header.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                recyclerView.addItemDecoration(new HeaderDecorator(header.getHeight()));
+                header.getViewTreeObserver().removeOnPreDrawListener(this);
+                return false;
+            }
+        });
 
         final float statusBar = dpToPx(getContext(), 28);
 
@@ -137,7 +145,9 @@ public class VersionsListFragment extends BaseFragment implements VersionsPresen
                     header.setTranslationY(y);
 
                     if (appLayout.getTop() != 0) {
-                        float translation = -1 * dpToPx(getContext(), 27) * y / appLayout.getTop();
+                        final float percent =  y / appLayout.getTop();
+
+                        final float translation = -1 * dpToPx(getContext(), 27) * percent;
                         appVersion.setTranslationY(translation);
                         appCode.setTranslationY(translation);
                         appIcon.setTranslationY(translation);
@@ -148,6 +158,16 @@ public class VersionsListFragment extends BaseFragment implements VersionsPresen
                 }
             }
         });
+    }
+
+    private void setupActionbar() {
+        AppCompatActivity appCompatActivity = ((AppCompatActivity) getActivity());
+        appCompatActivity.setSupportActionBar(toolbar);
+
+        final ActionBar supportActionBar = appCompatActivity.getSupportActionBar();
+        supportActionBar.setDisplayHomeAsUpEnabled(true);
+        supportActionBar.setHomeButtonEnabled(true);
+        supportActionBar.setDisplayShowTitleEnabled(false);
     }
 
     @Override
