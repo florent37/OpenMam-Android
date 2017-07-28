@@ -4,7 +4,6 @@ package mam.repository;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import florent37.github.com.mam.api.MamAPI;
 import florent37.github.com.mam.model.App;
@@ -27,6 +26,7 @@ public class AppRepositoryImpl implements AppRepository {
     public Single<List<App>> applications() {
         return api.apps().map(AppsResponse::getApps);
     }
+
 
     public Single<List<AppVersion>> application(String name) {
         return api.app(name).map(AppResponse::getVersions);

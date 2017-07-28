@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
+import com.lapism.searchview.SearchView;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -32,6 +34,9 @@ public class AppsListFragment extends BaseFragment implements AppsPresenter.View
 
     @BindView(R.id.swiperefresh)
     SwipeRefreshLayout swipeRefreshLayout;
+
+    @BindView(R.id.searchView)
+    SearchView searchView;
 
     @Inject
     AppsPresenter presenter;
@@ -59,6 +64,19 @@ public class AppsListFragment extends BaseFragment implements AppsPresenter.View
 
         displayAsLines();
         presenter.start();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                presenter.onSearch(newText);
+                return false;
+            }
+        });
 
         swipeRefreshLayout.setOnRefreshListener(() -> presenter.refresh());
 
