@@ -35,6 +35,10 @@ public class AppsPresenter extends AbstractPresenter<AppsPresenter.View> {
         getView().displayApp(app);
     }
 
+    public void refresh() {
+        start();
+    }
+
     public interface View extends AbstractPresenter.View {
         void displayApps(List<App> apps);
 

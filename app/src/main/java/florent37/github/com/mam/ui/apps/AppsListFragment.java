@@ -3,6 +3,7 @@ package florent37.github.com.mam.ui.apps;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +30,9 @@ public class AppsListFragment extends BaseFragment implements AppsPresenter.View
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    @BindView(R.id.swiperefresh)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     @Inject
     AppsPresenter presenter;
 
@@ -54,8 +58,9 @@ public class AppsListFragment extends BaseFragment implements AppsPresenter.View
         ButterKnife.bind(this, view);
 
         displayAsLines();
-
         presenter.start();
+
+        swipeRefreshLayout.setOnRefreshListener(() -> presenter.refresh());
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -79,6 +84,7 @@ public class AppsListFragment extends BaseFragment implements AppsPresenter.View
             public boolean onPreDraw() {
                 recyclerView.addItemDecoration(new HeaderDecorator(1, header.getHeight()));
                 header.getViewTreeObserver().removeOnPreDrawListener(this);
+                swipeRefreshLayout.setProgressViewOffset(false, header.getHeight(), header.getHeight() + 100);
                 return false;
             }
         });
@@ -93,6 +99,7 @@ public class AppsListFragment extends BaseFragment implements AppsPresenter.View
             @Override
             public boolean onPreDraw() {
                 recyclerView.addItemDecoration(new HeaderDecorator(1, header.getHeight()));
+                swipeRefreshLayout.setProgressViewOffset(false, header.getHeight() - 100 , header.getHeight() + 100);
                 header.getViewTreeObserver().removeOnPreDrawListener(this);
                 return false;
             }
@@ -105,6 +112,7 @@ public class AppsListFragment extends BaseFragment implements AppsPresenter.View
 
     @Override
     public void displayApps(List<App> apps) {
+        swipeRefreshLayout.setRefreshing(false);
         ((AppsAdapter) recyclerView.getAdapter()).setItems(apps);
     }
 
