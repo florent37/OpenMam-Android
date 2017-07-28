@@ -124,7 +124,7 @@ public class VersionsListFragment extends BaseFragment implements VersionsPresen
         header.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
-                recyclerView.addItemDecoration(new HeaderDecorator(header.getHeight()));
+                recyclerView.addItemDecoration(new HeaderDecorator(1, header.getHeight()));
                 header.getViewTreeObserver().removeOnPreDrawListener(this);
                 return false;
             }

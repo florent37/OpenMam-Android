@@ -7,16 +7,16 @@ import android.view.View;
 public class HeaderDecorator extends RecyclerView.ItemDecoration {
 
     public final int height;
+    public final int headerCells;
 
-    public HeaderDecorator(int height) {
+    public HeaderDecorator(int headerCells, int height) {
         this.height = height;
+        this.headerCells = headerCells;
     }
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView recyclerView, RecyclerView.State state) {
         final RecyclerView.ViewHolder holder = recyclerView.getChildViewHolder(view);
-
-        int headerCells = 1;
 
         //RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         //if (layoutManager instanceof GridLayoutManager) {

@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import florent37.github.com.mam.R;
 import florent37.github.com.mam.common.ClickListenerWrapper;
+import florent37.github.com.mam.customviews.Icon;
 import florent37.github.com.mam.model.App;
 
 /**
@@ -28,23 +29,21 @@ import florent37.github.com.mam.model.App;
 
 public class AppViewHolder extends RecyclerView.ViewHolder {
 
-    public static RecyclerView.ViewHolder build(ViewGroup parent, ClickListenerWrapper<AppsAdapter.ClickListener> clickListenerClickListenerWrapper) {
+    public static RecyclerView.ViewHolder build(ViewGroup parent, ClickListenerWrapper<ClickListener> clickListenerClickListenerWrapper) {
         return new AppViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.app_cell, parent, false), clickListenerClickListenerWrapper);
     }
 
-    @BindView(R.id.image)
-    ImageView image;
+    @BindView(R.id.icon)
+    Icon icon;
     @BindView(R.id.title)
     TextView title;
-    @BindView(R.id.letter)
-    TextView letter;
     @BindView(R.id.category)
     TextView category;
 
     private App app;
-    private ClickListenerWrapper<AppsAdapter.ClickListener> clickListenerWrapper;
+    private ClickListenerWrapper<ClickListener> clickListenerWrapper;
 
-    public AppViewHolder(View itemView, ClickListenerWrapper<AppsAdapter.ClickListener> clickListenerWrapper) {
+    public AppViewHolder(View itemView, ClickListenerWrapper<ClickListener> clickListenerWrapper) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         this.clickListenerWrapper = clickListenerWrapper;
@@ -62,25 +61,7 @@ public class AppViewHolder extends RecyclerView.ViewHolder {
         this.title.setText(app.getName());
         this.category.setText(app.getLastVersion());
 
-        letter.setVisibility(View.VISIBLE);
-        image.setVisibility(View.INVISIBLE);
-
-        letter.setText(String.valueOf(app.getName().toUpperCase().charAt(0)));
-
-        if(false && app.getImage() != null) {
-            Glide.with(itemView.getContext()).load(app.getImage()).listener(new RequestListener<Drawable>() {
-                @Override
-                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                    image.setVisibility(View.INVISIBLE);
-                    return false;
-                }
-
-                @Override
-                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                    letter.setVisibility(View.INVISIBLE);
-                    return false;
-                }
-            }).into(image);
-        }
+        icon.loadText(app.getName());
+        icon.loadUrl(app.getImage());
     }
 }

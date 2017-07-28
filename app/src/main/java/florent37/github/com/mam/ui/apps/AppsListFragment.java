@@ -3,11 +3,13 @@ package florent37.github.com.mam.ui.apps;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import florent37.github.com.mam.R;
 import florent37.github.com.mam.common.BaseFragment;
+import florent37.github.com.mam.common.HeaderDecorator;
 import florent37.github.com.mam.dagger.*;
 import florent37.github.com.mam.model.App;
 import florent37.github.com.mam.ui.versions.VersionsActivity;
@@ -50,8 +53,7 @@ public class AppsListFragment extends BaseFragment implements AppsPresenter.View
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        recyclerView.setAdapter(new AppsAdapter().onClick(presenter::onAppClicked));
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        displayAsLines();
 
         presenter.start();
 
@@ -65,6 +67,34 @@ public class AppsListFragment extends BaseFragment implements AppsPresenter.View
                 this.y -= dy;
 
                 header.setTranslationY(y/2f);
+            }
+        });
+    }
+
+    private void displayAsList(){
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        header.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                recyclerView.addItemDecoration(new HeaderDecorator(1, header.getHeight()));
+                header.getViewTreeObserver().removeOnPreDrawListener(this);
+                return false;
+            }
+        });
+    }
+
+    private void displayAsLines(){
+        recyclerView.setAdapter(new AppsLinesAdapter().onClick(presenter::onAppClicked));
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        header.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                recyclerView.addItemDecoration(new HeaderDecorator(1, header.getHeight()));
+                header.getViewTreeObserver().removeOnPreDrawListener(this);
+                return false;
             }
         });
     }

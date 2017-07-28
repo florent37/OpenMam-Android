@@ -16,13 +16,13 @@ import florent37.github.com.mam.ui.versions.VersionsAdapter;
 
 public class AppsHeaderViewHolder extends RecyclerView.ViewHolder {
 
-    public static RecyclerView.ViewHolder build(ViewGroup parent, ClickListenerWrapper<AppsAdapter.ClickListener> clickListenerClickListenerWrapper) {
+    public static RecyclerView.ViewHolder build(ViewGroup parent, ClickListenerWrapper<ClickListener> clickListenerClickListenerWrapper) {
         return new AppsHeaderViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.app_header_cell, parent, false), clickListenerClickListenerWrapper);
     }
 
-    private ClickListenerWrapper<AppsAdapter.ClickListener> clickListenerWrapper;
+    private ClickListenerWrapper<ClickListener> clickListenerWrapper;
 
-    public AppsHeaderViewHolder(View itemView, ClickListenerWrapper<AppsAdapter.ClickListener> clickListenerWrapper) {
+    public AppsHeaderViewHolder(View itemView, ClickListenerWrapper<ClickListener> clickListenerWrapper) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         this.clickListenerWrapper = clickListenerWrapper;
