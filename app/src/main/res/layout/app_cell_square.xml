@@ -41,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
+                android:lines="2"
                 android:layout_marginTop="12dp"
                 android:textColor="#3E3E3E"
                 tools:text="Title"
@@ -53,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/title"
                 android:textColor="#6e6e6e"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="8dp"
                 tools:text="Category"
                 />
 

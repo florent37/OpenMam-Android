@@ -22,9 +22,10 @@
         android:layout_below="@+id/icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="12dp"
+        android:gravity="left"
         android:textColor="#3E3E3E"
         android:text="Title"
         />
@@ -36,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
         android:textColor="#6e6e6e"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="4dp"
         android:text="1.0.1"
         />
 
