@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
-apply from: "../configuration.gradle"
 apply from: "scripts/setup.gradle"
 apply from: "scripts/upload.gradle"
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
+
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     defaultConfig {
@@ -22,12 +22,27 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     productFlavors {
         mock {
+            applicationIdSuffix ".mock"
+
+            ext {
+                mam_appName = "App Market Mock"
+                mam_appColor = "#4caf50"
+                mam_server = "http://the-twenty-five.herokuapp.com/"
+                mam_comment = "Just uploaded App Market 1.0.1"
+            }
 
         }
         prod {
-
+            applicationIdSuffix ".prod"
+            ext {
+                mam_appName = "App Market Prod"
+                mam_appColor = "#4caf50"
+                mam_server = "http://the-twenty-five.herokuapp.com/"
+                mam_comment = "Just uploaded App Market 1.0.1"
+            }
         }
     }
     compileOptions {

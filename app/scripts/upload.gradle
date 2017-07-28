@@ -1,48 +1,59 @@
 android.applicationVariants.all { variant ->
-    variant.outputs.each { output ->
-        def t = task("upload${variant.name.capitalize()}") << {
-            def apkFile = output.outputFile;
-            def applicationId = [variant.mergedFlavor.applicationId, variant.buildType.applicationIdSuffix].findAll().join()
 
-            println "uploading $applicationId : $apkFile.path"
+    def flavors = variant.productFlavors
 
-            def serverUrl = project.mam_server
+    int length = flavors.size()
+    for (int i = 0; i < length; ++i) {
 
-            def uri = serverUrl + "api/upload"
+        def flavor = flavors.get(i);
 
-            def url = new URL(uri)
-            URLConnection http = url.openConnection()
+        variant.outputs.each { output ->
+            def t = task("upload${variant.name.capitalize()}") << {
+                def apkFile = output.outputFile;
+                def applicationId = [variant.mergedFlavor.applicationId, variant.buildType.applicationIdSuffix].findAll().join()
 
-            println uri
+                println "uploading $applicationId : $apkFile.path"
 
-            http.setRequestProperty("apk-name", "$project.mam_appName")
-            http.setRequestProperty("apk-code", "$android.defaultConfig.versionCode")
-            http.setRequestProperty("apk-version", "$android.defaultConfig.versionName")
-            http.setRequestProperty("apk-comment", "$project.mam_comment")
+                def serverUrl = flavor.ext.mam_server
+                def apkName = flavor.ext.mam_appName
+                def comment = flavor.ext.mam_comment
 
-            http.setDoOutput(true)
-            http.setRequestMethod('POST')
-            http.setRequestProperty('User-agent', 'gradle upload script')
+                def uri = serverUrl + "api/upload"
 
-            def out = http.outputStream
-            def input = new FileInputStream(apkFile)
+                def url = new URL(uri)
+                URLConnection http = url.openConnection()
 
-            try {
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = input.read(buf)) > 0) {
-                    out.write(buf, 0, len);
+                println uri
+
+                http.setRequestProperty("apk-name", "$apkName")
+                http.setRequestProperty("apk-code", "$android.defaultConfig.versionCode")
+                http.setRequestProperty("apk-version", "$android.defaultConfig.versionName")
+                http.setRequestProperty("apk-comment", "$comment")
+
+                http.setDoOutput(true)
+                http.setRequestMethod('POST')
+                http.setRequestProperty('User-agent', 'gradle upload script')
+
+                def out = http.outputStream
+                def input = new FileInputStream(apkFile)
+
+                try {
+                    byte[] buf = new byte[1024];
+                    int len;
+                    while ((len = input.read(buf)) > 0) {
+                        out.write(buf, 0, len);
+                    }
+                    out.close();
+                    input.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                out.close();
-                input.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
-            def httpResponse = http.inputStream.text // read server response from it
-            println httpResponse
+                def httpResponse = http.inputStream.text // read server response from it
+                println httpResponse
+            }
+            t.dependsOn "assemble${variant.name.capitalize()}"
+            t.group = "MAM"
         }
-        t.dependsOn "assemble${variant.name.capitalize()}"
-        t.group = "MAM"
     }
 }
