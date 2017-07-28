@@ -18,13 +18,15 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@android:color/white">
 
             <ImageView
                 android:id="@+id/appBackgrond"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
                 android:scaleType="centerCrop"
+                android:alpha="0.8"
                 android:src="@color/blue" />
 
             <android.support.v7.widget.Toolbar
@@ -44,18 +46,12 @@
             android:layout_gravity="bottom"
             android:background="@android:color/white">
 
-            <TextView
+            <florent37.github.com.mam.customviews.Icon
                 android:id="@+id/appIcon"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="26dp"
-                android:layout_marginTop="-16dp"
-                tools:text="F"
-                android:gravity="center"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:textSize="26sp"
-                android:background="@drawable/roundrect" />
+                android:layout_marginTop="-16dp" />
 
             <TextView
                 android:id="@+id/appName"

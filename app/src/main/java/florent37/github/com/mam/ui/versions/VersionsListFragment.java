@@ -2,11 +2,16 @@ package florent37.github.com.mam.ui.versions;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -28,7 +34,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import florent37.github.com.mam.R;
 import florent37.github.com.mam.common.BaseFragment;
+import florent37.github.com.mam.common.ColorGenerator;
 import florent37.github.com.mam.common.HeaderDecorator;
+import florent37.github.com.mam.customviews.Icon;
 import florent37.github.com.mam.dagger.AppComponent;
 import florent37.github.com.mam.model.App;
 import florent37.github.com.mam.model.AppVersion;
@@ -53,17 +61,26 @@ public class VersionsListFragment extends BaseFragment implements VersionsPresen
     @BindView(R.id.appCode)
     TextView appCode;
 
+    @BindView(R.id.appBackgrond)
+    ImageView appBackgrond;
+
     @BindView(R.id.appLayout)
     View appLayout;
 
     @BindView(R.id.appIcon)
-    TextView appIcon;
+    Icon appIcon;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.install)
+    AppCompatButton installButton;
+
     @Inject
     VersionsPresenter presenter;
+
+    @Inject
+    ColorGenerator colorGenerator;
 
     public static VersionsListFragment newInstance(App app) {
         final Bundle args = new Bundle();
@@ -176,16 +193,24 @@ public class VersionsListFragment extends BaseFragment implements VersionsPresen
     }
 
     @Override
-    public void displayApp(AppVersion appVersion){
-        ((VersionsAdapter) recyclerView.getAdapter()).setHeaderObject(appVersion);
+    public void displayApp(App app, AppVersion appVersion){
+        ((VersionsAdapter) recyclerView.getAdapter()).setHeaderObject(app, appVersion);
     }
 
     @Override
-    public void displayApp(String name, String code, String version) {
-        appName.setText(name);
-        appVersion.setText("Version " + version);
-        appCode.setText("(" + code + ")");
-        appIcon.setText(String.valueOf(name.charAt(0)));
+    public void displayApp(App app) {
+        final int color = colorGenerator.generateColor(app.getName());
+
+        appBackgrond.setImageDrawable(new ColorDrawable(color));
+
+        ViewCompat.setBackgroundTintList(installButton, new ColorStateList(new int[][]{new int[0]}, new int[]{color}));
+
+        appName.setText(app.getName());
+        appVersion.setText("Version " + app.getLastVersion());
+        appCode.setText("(" + app.getLastCode() + ")");
+
+        appIcon.loadText(app.getName());
+        appIcon.loadUrl(app.getImage());
     }
 
     @OnClick(R.id.install)

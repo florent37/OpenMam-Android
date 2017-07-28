@@ -12,11 +12,16 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestListener;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import florent37.github.com.mam.R;
 import florent37.github.com.mam.common.ClickListenerWrapper;
+import florent37.github.com.mam.common.ColorGenerator;
+import florent37.github.com.mam.dagger.AppComponent;
+import florent37.github.com.mam.model.App;
 import florent37.github.com.mam.model.AppVersion;
 
 /**
@@ -25,12 +30,17 @@ import florent37.github.com.mam.model.AppVersion;
 
 public class VersionsViewHolder extends RecyclerView.ViewHolder {
 
+    @BindView(R.id.bubbleBackround)
+    ImageView bubbleBackround;
     @BindView(R.id.date)
     TextView date;
     @BindView(R.id.version)
     TextView version;
     @BindView(R.id.code)
     TextView code;
+
+    @Inject
+    ColorGenerator colorGenerator;
 
     private AppVersion appVersion;
     private ClickListenerWrapper<VersionsAdapter.ClickListener> clickListenerWrapper;
@@ -39,6 +49,8 @@ public class VersionsViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
         this.clickListenerWrapper = clickListenerWrapper;
+
+        AppComponent.from(itemView.getContext()).inject(this);
     }
 
     public static RecyclerView.ViewHolder build(ViewGroup parent, ClickListenerWrapper<VersionsAdapter.ClickListener> clickListenerClickListenerWrapper) {
@@ -52,8 +64,10 @@ public class VersionsViewHolder extends RecyclerView.ViewHolder {
         );
     }
 
-    public void bind(final AppVersion appVersion) {
+    public void bind(final AppVersion appVersion, App app) {
         this.appVersion = appVersion;
+
+        bubbleBackround.setColorFilter(colorGenerator.generateColor(app.getName()));
 
         this.date.setText(appVersion.getDate());
         this.code.setText(String.format("(%s)", appVersion.getCode()));

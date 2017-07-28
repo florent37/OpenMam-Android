@@ -11,6 +11,7 @@ import dagger.Provides;
 import florent37.github.com.mam.BuildConfig;
 import florent37.github.com.mam.api.MamAPI;
 import florent37.github.com.mam.bus.MainBus;
+import florent37.github.com.mam.common.ColorGenerator;
 import florent37.github.com.mam.common.DownloadManager;
 import florent37.github.com.mam.common.InstallManager;
 import florent37.github.com.mam.repository.AppRepository;
@@ -65,6 +66,12 @@ public class AppModule {
                 .addInterceptor(new StethoInterceptor())
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .build();
+    }
+
+    @Provides
+    @Singleton
+    public ColorGenerator provideColorGenerator(){
+        return new ColorGenerator(application);
     }
 
     @Provides

@@ -12,13 +12,12 @@ import florent37.github.com.mam.model.AppVersion;
 
 public class VersionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final int HEADER_SIZE = 1;
-
     private final int TYPE_CELL_FIRST = 2;
     private final int TYPE_CELL = 3;
 
-    private Object headerObject;
-    private List<Object> list = new ArrayList<>();
+    private AppVersion headerObject;
+    private App app;
+    private List<AppVersion> list = new ArrayList<>();
 
     private ClickListenerWrapper<ClickListener> clickListenerWrapper = new ClickListenerWrapper<>();
 
@@ -46,12 +45,12 @@ public class VersionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         switch (getItemViewType(position)) {
             case TYPE_CELL:
                 if (holder instanceof VersionsViewHolder) {
-                    ((VersionsViewHolder) holder).bind(getItem(position));
+                    ((VersionsViewHolder) holder).bind(getItem(position), app);
                 }
                 break;
             case TYPE_CELL_FIRST:
                 if (holder instanceof AppViewHolder) {
-                    ((AppViewHolder) holder).bind((AppVersion) headerObject);
+                    ((AppViewHolder) holder).bind(headerObject);
                 }
                 break;
         }
@@ -62,9 +61,9 @@ public class VersionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return this;
     }
 
-    private <T> T getItem(int position) {
+    private AppVersion getItem(int position) {
         final int headerSize = headerObject != null ? 1 : 0;
-        return (T) list.get(position - headerSize);
+        return list.get(position - headerSize);
     }
 
     @Override
@@ -73,8 +72,9 @@ public class VersionsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return list.size() + headerSize;
     }
 
-    public void setHeaderObject(Object item) {
-        headerObject = item;
+    public void setHeaderObject(App app, AppVersion item) {
+        this.headerObject = item;
+        this.app = app;
         notifyDataSetChanged();
     }
 

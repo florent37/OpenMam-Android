@@ -27,7 +27,13 @@
                 android:layout_height="60dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/colored_circle">
+               >
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/bubbleBackround"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/colored_circle"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"

@@ -18,7 +18,12 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
+import javax.inject.Inject;
+
+import florent37.github.com.mam.MainApplication;
 import florent37.github.com.mam.R;
+import florent37.github.com.mam.common.ColorGenerator;
+import florent37.github.com.mam.dagger.AppComponent;
 
 /**
  * Created by florentchampigny on 28/07/2017.
@@ -28,6 +33,10 @@ public class Icon extends FrameLayout {
 
     private TextView letter;
     private ImageView imageView;
+    private ImageView iconBackground;
+
+    @Inject
+    ColorGenerator colorGenerator;
 
     public Icon(@NonNull Context context) {
         this(context, null);
@@ -45,12 +54,16 @@ public class Icon extends FrameLayout {
     private void init(Context context, AttributeSet attrs) {
         addView(LayoutInflater.from(context).inflate(R.layout.layout_icon, this, false));
 
+        AppComponent.from(context).inject(this);
+
+        iconBackground = (ImageView) findViewById(R.id.iconBackground);
         letter = (TextView) findViewById(R.id.iconLetter);
         imageView = (ImageView) findViewById(R.id.iconImage);
     }
 
     public void loadText(String text){
         letter.setText(String.valueOf(text.charAt(0)));
+        iconBackground.setColorFilter(colorGenerator.generateColor(text));
     }
 
     public void loadUrl(String url){

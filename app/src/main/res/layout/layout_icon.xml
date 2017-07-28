@@ -4,8 +4,13 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@drawable/roundrect"
     >
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/iconBackground"
+        android:src="@drawable/roundrect"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/iconImage"

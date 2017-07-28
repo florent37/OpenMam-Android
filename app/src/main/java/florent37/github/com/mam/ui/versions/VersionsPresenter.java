@@ -44,13 +44,13 @@ public class VersionsPresenter extends AbstractPresenter<VersionsPresenter.View>
                 .doOnSuccess((Consumer<List<AppVersion>>) versions -> appVersions = versions)
                 .subscribe(
                         versions -> {
-                            getView().displayApp(versions.get(0)); //display comment, date
+                            getView().displayApp(app, versions.get(0)); //display comment, date
                             getView().displayAppVersions(versions);
                         },
                         throwable -> {
                         });
 
-        getView().displayApp(app.getName(), app.getLastVersion(), app.getLastCode());
+        getView().displayApp(app);
     }
 
     public void onAppDownloadClicked() {
@@ -75,7 +75,7 @@ public class VersionsPresenter extends AbstractPresenter<VersionsPresenter.View>
                         // Do what you want with downloaded path
                     }, throwable -> {
                         throwable.printStackTrace();
-                        // Handle download faile here
+                        // Handle download fail here
                     }));
         }
     }
@@ -83,9 +83,9 @@ public class VersionsPresenter extends AbstractPresenter<VersionsPresenter.View>
     public interface View extends AbstractPresenter.View {
         void displayAppVersions(List<AppVersion> versions);
 
-        void displayApp(AppVersion appVersion);
+        void displayApp(App app, AppVersion appVersion);
 
-        void displayApp(String name, String version, String code);
+        void displayApp(App app);
 
         Observable<Boolean> requestPermissionWriteExternalStorage();
     }
