@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 apply from: "scripts/setup.gradle"
 apply from: "scripts/upload.gradle"
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
 
@@ -69,11 +69,8 @@ dependencies {
     annotationProcessor "android.arch.lifecycle:compiler:" + project.archLifecycleVersion;
 
     compile 'com.github.florent37:rxcomponent-lifecycle:1.0.1@aar'
-    compile 'com.github.florent37:rxbus:1.0.0'
 
     compile 'com.wada811:android-material-design-colors:3.0.0'
-
-    compile 'com.github.florent37:diagonallayout:1.0.6'
 
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
@@ -102,4 +99,6 @@ dependencies {
 
     compile 'com.lapism:searchview:4.0'
     compile 'com.flaviofaria:kenburnsview:1.0.7'
+
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
 }

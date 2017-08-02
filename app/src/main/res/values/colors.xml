@@ -6,6 +6,8 @@
 
     <color name="colorAccent">#FF4081</color>
     <color name="cell_background">#f0f0f0</color>
+    <color name="background">#FAFAFA</color>
 
     <color name="blue">#DD125DB0</color>
+    <color name="textColor">#3E3E3E</color>
 </resources>

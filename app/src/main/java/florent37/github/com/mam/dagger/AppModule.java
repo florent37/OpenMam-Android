@@ -10,7 +10,6 @@ import dagger.Module;
 import dagger.Provides;
 import florent37.github.com.mam.BuildConfig;
 import florent37.github.com.mam.api.MamAPI;
-import florent37.github.com.mam.bus.MainBus;
 import florent37.github.com.mam.common.ColorGenerator;
 import florent37.github.com.mam.common.DownloadManager;
 import florent37.github.com.mam.common.InstallManager;
@@ -51,12 +50,6 @@ public class AppModule {
     @Singleton
     public DownloadManager provideDownloadManager() {
         return new DownloadManager(application);
-    }
-
-    @Provides
-    @Singleton
-    public MainBus provideMainBus() {
-        return new MainBus();
     }
 
     @Provides

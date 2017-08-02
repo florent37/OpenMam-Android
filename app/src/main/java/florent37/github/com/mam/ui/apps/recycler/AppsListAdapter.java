@@ -1,4 +1,4 @@
-package florent37.github.com.mam.ui.apps;
+package florent37.github.com.mam.ui.apps.recycler;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
@@ -8,6 +8,7 @@ import java.util.List;
 
 import florent37.github.com.mam.common.ClickListenerWrapper;
 import florent37.github.com.mam.model.App;
+import florent37.github.com.mam.ui.apps.ClickListener;
 
 public class AppsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements AppsAdapter<AppsListAdapter>{
 

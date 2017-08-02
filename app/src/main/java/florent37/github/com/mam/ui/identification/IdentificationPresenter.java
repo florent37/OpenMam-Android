@@ -18,6 +18,11 @@ public class IdentificationPresenter extends AbstractPresenter<IdentificationPre
 
     }
 
+    public void onLoginButtonClicked() {
+        getView().launchNextScreen();
+    }
+
     public interface View extends AbstractPresenter.View {
+        void launchNextScreen();
     }
 }

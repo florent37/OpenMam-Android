@@ -12,7 +12,7 @@ import florent37.github.com.mam.MainApplication;
 import florent37.github.com.mam.ui.apps.AppsListFragment;
 import florent37.github.com.mam.ui.identification.IdentificationFragment;
 import florent37.github.com.mam.ui.versions.VersionsListFragment;
-import florent37.github.com.mam.ui.versions.VersionsViewHolder;
+import florent37.github.com.mam.ui.versions.recycler.VersionsViewHolder;
 
 /**
  * Created by florentchampigny on 18/05/2017.

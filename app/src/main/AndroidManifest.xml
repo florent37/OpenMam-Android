@@ -24,6 +24,7 @@
         </activity>
         <activity android:name=".ui.apps.AppsActivity" />
         <activity android:name=".ui.versions.VersionsActivity" />
+        <activity android:name=".ui.identification.IdentificationActivity" />
 
         <provider
             android:name=".GenericFileProvider"

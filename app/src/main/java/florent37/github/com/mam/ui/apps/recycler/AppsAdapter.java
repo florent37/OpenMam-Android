@@ -1,8 +1,9 @@
-package florent37.github.com.mam.ui.apps;
+package florent37.github.com.mam.ui.apps.recycler;
 
 import java.util.List;
 
 import florent37.github.com.mam.model.App;
+import florent37.github.com.mam.ui.apps.ClickListener;
 
 public interface AppsAdapter<ME> {
 

@@ -1,19 +1,10 @@
-package florent37.github.com.mam.ui.apps;
+package florent37.github.com.mam.ui.apps.recycler;
 
-import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,6 +13,7 @@ import florent37.github.com.mam.R;
 import florent37.github.com.mam.common.ClickListenerWrapper;
 import florent37.github.com.mam.customviews.Icon;
 import florent37.github.com.mam.model.App;
+import florent37.github.com.mam.ui.apps.ClickListener;
 
 /**
  * Created by florentchampigny on 20/06/2017.

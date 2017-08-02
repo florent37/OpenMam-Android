@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import florent37.github.com.mam.R;
 import florent37.github.com.mam.common.BaseActivity;
 import florent37.github.com.mam.ui.apps.AppsActivity;
+import florent37.github.com.mam.ui.identification.IdentificationActivity;
 import io.reactivex.Observable;
 
 public class SplashActivity extends BaseActivity {
@@ -24,7 +25,7 @@ public class SplashActivity extends BaseActivity {
 
     protected void launchNextScreen(){
         overridePendingTransition(0, 0);
-        startActivity(AppsActivity.newInstance(SplashActivity.this));
+        startActivity(IdentificationActivity.newInstance(SplashActivity.this));
         finish();
     }
 }

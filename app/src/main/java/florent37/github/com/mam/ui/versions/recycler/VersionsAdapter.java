@@ -1,4 +1,4 @@
-package florent37.github.com.mam.ui.versions;
+package florent37.github.com.mam.ui.versions.recycler;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;

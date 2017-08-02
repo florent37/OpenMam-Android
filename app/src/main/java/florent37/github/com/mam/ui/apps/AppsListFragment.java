@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,6 +24,8 @@ import florent37.github.com.mam.common.BaseFragment;
 import florent37.github.com.mam.common.HeaderDecorator;
 import florent37.github.com.mam.dagger.*;
 import florent37.github.com.mam.model.App;
+import florent37.github.com.mam.ui.apps.recycler.AppsAdapter;
+import florent37.github.com.mam.ui.apps.recycler.AppsLinesAdapter;
 import florent37.github.com.mam.ui.versions.VersionsActivity;
 
 public class AppsListFragment extends BaseFragment implements AppsPresenter.View {

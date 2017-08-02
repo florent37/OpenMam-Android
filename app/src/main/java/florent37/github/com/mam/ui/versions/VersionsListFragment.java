@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -40,6 +39,7 @@ import florent37.github.com.mam.customviews.Icon;
 import florent37.github.com.mam.dagger.AppComponent;
 import florent37.github.com.mam.model.App;
 import florent37.github.com.mam.model.AppVersion;
+import florent37.github.com.mam.ui.versions.recycler.VersionsAdapter;
 import io.reactivex.Observable;
 
 public class VersionsListFragment extends BaseFragment implements VersionsPresenter.View {

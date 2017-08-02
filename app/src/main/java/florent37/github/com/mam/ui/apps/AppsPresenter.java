@@ -1,30 +1,22 @@
 package florent37.github.com.mam.ui.apps;
 
-import android.text.TextUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import florent37.github.com.mam.bus.MainBus;
 import florent37.github.com.mam.common.AbstractPresenter;
 import florent37.github.com.mam.model.App;
 import florent37.github.com.mam.repository.AppRepository;
-import io.reactivex.Observable;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Predicate;
 
 public class AppsPresenter extends AbstractPresenter<AppsPresenter.View> {
 
     private final AppRepository appRepository;
-    private final MainBus mainBus;
     private ArrayList<App> cachedApps;
 
     @Inject
-    public AppsPresenter(AppRepository appRepository, MainBus mainBus) {
+    public AppsPresenter(AppRepository appRepository) {
         this.appRepository = appRepository;
-        this.mainBus = mainBus;
     }
 
     public void start() {

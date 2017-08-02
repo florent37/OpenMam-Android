@@ -1,6 +1,5 @@
-package florent37.github.com.mam.ui.versions;
+package florent37.github.com.mam.ui.versions.recycler;
 
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +8,8 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import florent37.github.com.mam.R;
 import florent37.github.com.mam.common.ClickListenerWrapper;
-import florent37.github.com.mam.model.App;
 import florent37.github.com.mam.model.AppVersion;
 
 /**
