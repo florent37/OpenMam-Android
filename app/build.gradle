@@ -37,6 +37,7 @@ android {
         }
         prod {
             applicationIdSuffix ".prod"
+
             ext {
                 mam_appName = "App Market Prod"
                 mam_appColor = "#4caf50"

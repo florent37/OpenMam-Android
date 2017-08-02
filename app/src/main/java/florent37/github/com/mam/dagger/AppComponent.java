@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import florent37.github.com.mam.customviews.Icon;
+import florent37.github.com.mam.customviews.IconRound;
 import florent37.github.com.mam.ui.apps.AppsActivity;
 import florent37.github.com.mam.MainApplication;
 import florent37.github.com.mam.ui.apps.AppsListFragment;
@@ -37,4 +38,6 @@ public abstract class AppComponent {
     public abstract void inject(Icon icon);
 
     public abstract void inject(VersionsViewHolder versionsViewHolder);
+
+    public abstract void inject(IconRound iconRound);
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <florent37.github.com.mam.customviews.IconRound
+        android:id="@+id/drawerUserIcon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignLeft="@+id/drawerUserName"
+        android:layout_above="@+id/drawerUserName"
+        android:layout_marginBottom="16dp"
+        tools:background="@android:color/white"
+        />
+
+    <TextView
+        android:id="@+id/drawerUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="UserName"
+        android:textColor="@android:color/white"/>
+
+</RelativeLayout>

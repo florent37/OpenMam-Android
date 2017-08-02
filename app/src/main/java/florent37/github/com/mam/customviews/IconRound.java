@@ -20,7 +20,6 @@ import com.bumptech.glide.request.target.Target;
 
 import javax.inject.Inject;
 
-import florent37.github.com.mam.MainApplication;
 import florent37.github.com.mam.R;
 import florent37.github.com.mam.common.ColorGenerator;
 import florent37.github.com.mam.dagger.AppComponent;
@@ -29,7 +28,7 @@ import florent37.github.com.mam.dagger.AppComponent;
  * Created by florentchampigny on 28/07/2017.
  */
 
-public class Icon extends FrameLayout {
+public class IconRound extends FrameLayout {
 
     private TextView letter;
     private ImageView imageView;
@@ -38,21 +37,21 @@ public class Icon extends FrameLayout {
     @Inject
     ColorGenerator colorGenerator;
 
-    public Icon(@NonNull Context context) {
+    public IconRound(@NonNull Context context) {
         this(context, null);
     }
 
-    public Icon(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public IconRound(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public Icon(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public IconRound(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 
     private void init(Context context, AttributeSet attrs) {
-        addView(LayoutInflater.from(context).inflate(R.layout.layout_icon, this, false));
+        addView(LayoutInflater.from(context).inflate(R.layout.layout_icon_round, this, false));
 
         AppComponent.from(context).inject(this);
 
