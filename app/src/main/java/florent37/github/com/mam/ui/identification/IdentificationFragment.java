@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
@@ -25,6 +26,12 @@ public class IdentificationFragment extends BaseFragment implements Identificati
 
     @Inject
     IdentificationPresenter presenter;
+
+    @BindView(R.id.password)
+    EditText password;
+
+    @BindView(R.id.user)
+    EditText user;
 
     public static Fragment newInstance() {
         return new IdentificationFragment();
@@ -71,5 +78,15 @@ public class IdentificationFragment extends BaseFragment implements Identificati
     public void launchNextScreen() {
         startActivity(AppsActivity.newInstance(getContext()));
         getActivity().finish();
+    }
+
+    @Override
+    public String getLogin() {
+        return user.getText().toString();
+    }
+
+    @Override
+    public String getPassword() {
+        return password.getText().toString();
     }
 }
